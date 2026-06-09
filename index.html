@@ -3,243 +3,384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeGrants Countdown</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <title>All_gamers | Project_Countdown</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@700;900&display=swap" rel="family">
     
     <style>
-        /* --- Gaming Dark & Dynamic Background --- */
-        body, html {
-            height: 100%;
+        :root {
+            --bg-black: #0a0a0a;
+            --bg-brown: #231710;
+            --accent-brown: #5c3d2e;
+            --off-white: #f5f5f0;
+            --text-muted: #b5b0aa;
+            
+            /* Interactive variables updated by JS */
+            --mx: 0deg;
+            --my: 0deg;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            font-family: 'Rajdhani', sans-serif;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-black);
+            font-family: 'Inter', sans-serif;
+            color: var(--off-white);
+            overflow-x: hidden;
+        }
+
+        /* Ambient Dynamic Background */
+        .bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, var(--bg-brown) 0%, var(--bg-black) 80%);
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* Rotating & Interactive Blurry Gamepad */
+        .gamepad-container {
+            position: absolute;
+            top: 15%;
+            left: 15%;
+            width: 70vw;
+            height: 70vh;
+            filter: blur(25px) drop-shadow(0 0 50px rgba(92, 61, 46, 0.4));
+            opacity: 0.5;
+            transform-style: preserve-3d;
+            /* Combines infinite rotation with mouse/touch interaction tilt */
+            transform: rotateX(var(--my)) rotateY(var(--mx));
+            transition: transform 0.1s ease-out;
+            pointer-events: none;
+        }
+
+        .gamepad-svg {
+            width: 100%;
+            height: 100%;
+            animation: continuousRotate 25s linear infinite;
+        }
+
+        @keyframes continuousRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Layout & Typography */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* Deep dark base with dynamic glowing ambient light */
-            background-color: #0b0c10;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(111, 66, 193, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(0, 242, 254, 0.15) 0%, transparent 50%);
-            background-size: 200% 200%;
-            animation: ambientGlow 10s ease infinite alternate;
-            color: #c5c6c7;
-            overflow: hidden;
+            text-align: center;
+            padding: 4rem 0;
         }
 
-        /* Slow-moving dynamic ambient light for the gaming aesthetic */
-        @keyframes ambientGlow {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
+        /* Section 1: Hero & Vision */
+        #hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--off-white) 30%, var(--accent-brown) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
         }
 
-        /* --- Main Container --- */
-        .main-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
+        #hero h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--accent-brown);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        #hero p {
+            max-width: 700px;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            line-height: 1.8;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* Section 2: Project Countdown */
+        #countdown-section h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--off-white);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        /* Grid Timer Display */
+        .timer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
             width: 100%;
             max-width: 800px;
-            padding: 20px;
-            box-sizing: border-box;
         }
 
-        .countdown-container {
-            text-align: center;
-            background: rgba(11, 12, 16, 0.75);
-            padding: 40px 50px;
+        .timer-box {
+            background: rgba(35, 23, 16, 0.3);
+            border: 1px solid rgba(245, 245, 240, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1rem;
             border-radius: 12px;
-            border: 2px solid #1f2833;
-            /* Cyan neon glow outline */
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.15), inset 0 0 15px rgba(0, 242, 254, 0.05);
-            backdrop-filter: blur(8px);
-            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        /* --- ALL GAMERS Heading with Smooth Single Glow-Up --- */
-        h1 {
+        .timer-box .number {
             font-family: 'Orbitron', sans-serif;
-            margin-top: 0;
-            font-size: 2.2rem;
-            margin-bottom: 35px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            
-            /* Starts in a dark, unlit state */
-            color: #1a1a24; 
-            text-shadow: none;
-            
-            /* Plays the smooth glow animation ONCE (forwards keeps it lit at the end) */
-            animation: powerOnGlow 3s ease-in-out 0.5s forwards;
-        }
-
-        /* Keyframes for the smooth single light-up effect */
-        @keyframes powerOnGlow {
-            0% {
-                color: #1a1a24;
-                text-shadow: none;
-            }
-            100% {
-                color: #00f2fe; /* High-tech Cyan */
-                text-shadow: 0 0 10px rgba(0, 242, 254, 0.8), 
-                             0 0 20px rgba(0, 242, 254, 0.5),
-                             0 0 40px rgba(0, 242, 254, 0.3);
-            }
-        }
-
-        /* --- Timer Layout --- */
-        #countdown {
-            display: flex;
-            gap: 25px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .time-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: rgba(31, 40, 51, 0.4);
-            padding: 20px;
-            border-radius: 8px;
-            min-width: 100px;
-            border-bottom: 3px solid #6f42c1; /* Purple accent base */
-            transition: transform 0.2s;
-        }
-
-        .time-box:hover {
-            transform: translateY(-5px);
-            border-bottom: 3px solid #00f2fe; /* Turns cyan on hover */
-        }
-
-        .time-box span {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.8rem;
+            font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+            color: var(--off-white);
+            display: block;
         }
 
-        .label {
-            font-size: 1.1rem;
+        .timer-box .label {
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-top: 8px;
-            color: #45f3ff;
-            font-weight: bold;
+            color: var(--accent-brown);
+            margin-top: 0.5rem;
+            display: block;
         }
 
-        /* --- Branding & Footer Section --- */
-        .footer-section {
+        #countdown-section p {
+            max-width: 800px;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            line-height: 1.7;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Footer / Credits Section */
+        footer {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            border-top: 1px solid rgba(245, 245, 240, 0.05);
+            background: linear-gradient(to bottom, transparent, #050505);
+            padding: 3rem 1rem;
+        }
+
+        footer .contributors {
             font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            color: var(--off-white);
+            margin-bottom: 1.5rem;
         }
 
-        .brand-name {
-            font-size: 2rem;
-            font-weight: bold;
-            letter-spacing: 5px;
-            color: #fff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            margin-bottom: 15px;
+        footer .contributors span {
+            color: var(--accent-brown);
+            font-weight: 700;
         }
 
-        /* --- Support / YouTube Button --- */
-        .support-btn {
+        footer .support-text {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* YouTube Support Button */
+        .btn-youtube {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #ff0000, #b30000); /* YouTube Red */
-            color: white;
-            text-decoration: none;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            font-family: 'Rajdhani', sans-serif;
-        }
-
-        .support-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
-            background: linear-gradient(135deg, #ff1a1a, #cc0000);
-        }
-
-        #message {
+            gap: 0.75rem;
+            background-color: #ff0000;
+            color: #ffffff;
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #00f2fe;
-            display: none;
-            text-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-youtube:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 45px rgba(255, 0, 0, 0.6);
+            background-color: #cc0000;
+        }
+
+        .btn-youtube:active {
+            transform: translateY(-1px);
+        }
+
+        /* Scroll Indicator Chevron */
+        .scroll-down {
+            margin-top: 2rem;
+            color: var(--accent-brown);
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 600px) {
+            .timer-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <div class="countdown-container">
-            <h1>ALL GAMERS</h1>
-            
-            <div id="countdown">
-                <div class="time-box">
-                    <span id="days">00</span>
-                    <div class="label">Days</div>
-                </div>
-                <div class="time-box">
-                    <span id="hours">00</span>
-                    <div class="label">Hours</div>
-                </div>
-                <div class="time-box">
-                    <span id="minutes">00</span>
-                    <div class="label">Min</div>
-                </div>
-                <div class="time-box">
-                    <span id="seconds">00</span>
-                    <div class="label">Sec</div>
-                </div>
-            </div>
-
-            <div id="message">TIME ELAPSED</div>
-        </div>
-
-        <div class="footer-section">
-            <div class="brand-name">DEGRANTS</div>
-            <a href="https://www.youtube.com/@jwufuru" target="_blank" class="support-btn">
-                Show Support on YouTube
-            </a>
+    <div class="bg-canvas">
+        <div class="gamepad-container" id="interactive-pad">
+            <svg class="gamepad-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 40C20 30 30 25 50 25C70 25 80 30 80 40C80 55 75 75 65 75C60 75 55 68 50 68C45 68 40 75 35 75C25 75 20 55 20 40Z" fill="#f5f5f0" fill-opacity="0.15" stroke="#5c3d2e" stroke-width="1.5"/>
+                <path d="M32 45H28V49H32V45Z" fill="#5c3d2e"/>
+                <path d="M30 43H30.01M30 51H30.01M26 47H26.01M34 47H34.01" stroke="#5c3d2e" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="66" cy="43" r="2" fill="#f5f5f0" />
+                <circle cx="72" cy="47" r="2" fill="#f5f5f0" />
+                <circle cx="66" cy="51" r="2" fill="#f5f5f0" />
+                <circle cx="60" cy="47" r="2" fill="#f5f5f0" />
+                <circle cx="41" cy="54" r="5" stroke="#5c3d2e" stroke-width="1"/>
+                <circle cx="41" cy="54" r="2" fill="#5c3d2e"/>
+                <circle cx="59" cy="54" r="5" stroke="#5c3d2e" stroke-width="1"/>
+                <circle cx="59" cy="54" r="2" fill="#5c3d2e"/>
+            </svg>
         </div>
     </div>
 
+    <div class="container">
+        
+        <section id="hero">
+            <h1>All_gamers</h1>
+            <h2>Vision Statement</h2>
+            <p>Building the world’s largest gaming community — a dedicated home where all gamers can share ideas, experiences, and opportunities for growth.</p>
+            <div class="scroll-down" onclick="document.getElementById('countdown-section').scrollIntoView();">▼</div>
+        </section>
+
+        <section id="countdown-section">
+            <h1>Project_Countdown</h1>
+            
+            <div class="timer-container">
+                <div class="timer-box">
+                    <span class="number" id="days">00</span>
+                    <span class="label">Days</span>
+                </div>
+                <div class="timer-box">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">Hours</span>
+                </div>
+                <div class="timer-box">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">Minutes</span>
+                </div>
+                <div class="timer-box">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">Seconds</span>
+                </div>
+            </div>
+
+            <p>The next paradigm of gaming starts here: one connected world, one synchronized experience, powered by the collective.</p>
+        </section>
+
+        <footer>
+            <div class="contributors">Current contributors: <span>DE GRANTS</span></div>
+            <div class="support-text">show support by subscribing to YouTube (Jwufuru)</div>
+            <a href="https://www.youtube.com/@Jwufuru" target="_blank" rel="noopener noreferrer" class="btn-youtube">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: middle;">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                Subscribe
+            </a>
+        </footer>
+
+    </div>
+
     <script>
-        // Set the countdown target to exactly June 9, 2027 at midnight
+        // 1. Precise 1-Year Target Countdown Logic (Ends precisely June 9, 2027)
         const targetDate = new Date("June 9, 2027 00:00:00").getTime();
 
-        const countdownInterval = setInterval(function() {
+        function updateCountdown() {
             const now = new Date().getTime();
-            const distance = targetDate - now;
+            const difference = targetDate - now;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
-
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById("countdown").style.display = "none";
-                document.getElementById("message").style.display = "block";
+            if (difference < 0) {
+                document.querySelector('.timer-container').innerHTML = "<div style='grid-column: span 4; font-family:\"Orbitron\"; font-size:2rem;'>THE PARADIGM HAS BEGUN</div>";
+                return;
             }
-        }, 1000);
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Instant launch invocation
+
+        // 2. Mouse and Touch Dynamic Interactive Tilt System
+        const root = document.documentElement;
+
+        function handleInteraction(clientX, clientY) {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            // Normalize inputs to ranges between -0.5 and 0.5
+            const xAxis = (width / 2 - clientX) / (width / 2);
+            const yAxis = (height / 2 - clientY) / (height / 2);
+            
+            // Apply a controlled max tilt of 25 degrees
+            root.style.setProperty('--mx', (xAxis * 25) + "deg");
+            root.style.setProperty('--my', (-yAxis * 25) + "deg");
+        }
+
+        // Mouse Tracker
+        window.addEventListener('mousemove', (e) => {
+            handleInteraction(e.clientX, e.clientY);
+        });
+
+        // Touch Device Tracker
+        window.addEventListener('touchmove', (e) => {
+            if(e.touches.length > 0) {
+                handleInteraction(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: true });
     </script>
 </body>
 </html>
