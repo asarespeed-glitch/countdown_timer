@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All_gamers | Project_Countdown</title>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20 40C20 30 30 25 50 25C70 25 80 30 80 40C80 55 75 75 65 75C60 75 55 68 50 68C45 68 40 75 35 75C25 75 20 55 20 40Z' fill='%23f5f5f0' stroke='%235c3d2e' stroke-width='4'/%3E%3Ccircle cx='38' cy='48' r='7' fill='%23231710'/%3E%3Ccircle cx='62' cy='48' r='7' fill='%23231710'/%3E%3Crect x='22' y='45' width='6' height='6' fill='%235c3d2e'/%3E%3Ccircle cx='72' cy='48' r='3' fill='%235c3d2e'/%3E%3C/svg%3E">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -55,8 +58,8 @@
             left: 15%;
             width: 70vw;
             height: 70vh;
-            filter: blur(10px) drop-shadow(0 0 60px rgba(92, 61, 46, 0.6)); /* Reduced blur, heightened glow */
-            opacity: 0.75; /* Increased base opacity for better visibility */
+            filter: blur(10px) drop-shadow(0 0 60px rgba(92, 61, 46, 0.6));
+            opacity: 0.75;
             transform-style: preserve-3d;
             transform: rotateX(var(--my)) rotateY(var(--mx));
             transition: transform 0.1s ease-out;
@@ -252,10 +255,75 @@
             60% { transform: translateY(-5px); }
         }
 
-        @media (max-width: 600px) {
+        /* Portrait Mode Typography Upgrades */
+        @media (orientation: portrait) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            #hero h1 {
+                font-size: clamp(3.8rem, 13vw, 5.5rem);
+                margin-bottom: 2.5rem;
+            }
+
+            #hero h2 {
+                font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+                letter-spacing: 4px;
+                margin-bottom: 1.5rem;
+            }
+
+            #hero p {
+                font-size: clamp(1.15rem, 4.5vw, 1.4rem);
+                line-height: 1.7;
+            }
+
+            #countdown-section h1 {
+                font-size: clamp(2.8rem, 9vw, 4.5rem);
+                margin-bottom: 3.5rem;
+            }
+
             .timer-container {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+                gap: 1.2rem;
+                margin-bottom: 3.5rem;
+            }
+
+            .timer-box {
+                padding: 2.2rem 1rem;
+            }
+
+            .timer-box .number {
+                font-size: clamp(2.6rem, 9vw, 3.8rem);
+            }
+
+            .timer-box .label {
+                font-size: 0.85rem;
+                letter-spacing: 3px;
+                margin-top: 0.75rem;
+            }
+
+            #countdown-section p {
+                font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+                line-height: 1.6;
+            }
+
+            footer .contributors {
+                font-size: 1.4rem;
+                letter-spacing: 2px;
+                margin-bottom: 2rem;
+            }
+
+            footer .support-text {
+                font-size: 1.15rem;
+                line-height: 1.5;
+                margin-bottom: 2.5rem;
+            }
+
+            .btn-youtube {
+                font-size: 1.15rem;
+                padding: 1.2rem 3.5rem;
+                width: 85%;
+                justify-content: center;
             }
         }
     </style>
@@ -319,7 +387,7 @@
             <div class="support-text">show support by subscribing to YouTube (Jwufuru)</div>
             <a href="https://www.youtube.com/@Jwufuru" target="_blank" rel="noopener noreferrer" class="btn-youtube">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: middle;">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93-.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
                 Subscribe
             </a>
@@ -328,7 +396,7 @@
     </div>
 
     <script>
-        // 1. Precise 1-Year Target Countdown Logic (Ends precisely June 9, 2027)
+        // 1. Precise 1-Year Target Countdown Logic (Ends June 9, 2027)
         const targetDate = new Date("June 9, 2027 00:00:00").getTime();
 
         function updateCountdown() {
@@ -336,7 +404,7 @@
             const difference = targetDate - now;
 
             if (difference < 0) {
-                document.querySelector('.timer-container').innerHTML = "<div style='grid-column: span 4; font-family:\"Orbitron\"; font-size:2rem;'>THE PARADIGM HAS BEGUN</div>";
+                document.querySelector('.timer-container').innerHTML = "<div style='grid-column: span 2; font-family:\"Orbitron\"; font-size:2rem;'>THE PARADIGM HAS BEGUN</div>";
                 return;
             }
 
@@ -360,21 +428,17 @@
             const width = window.innerWidth;
             const height = window.innerHeight;
             
-            // Normalize inputs to ranges between -0.5 and 0.5
             const xAxis = (width / 2 - clientX) / (width / 2);
             const yAxis = (height / 2 - clientY) / (height / 2);
             
-            // Apply a controlled max tilt of 25 degrees
             root.style.setProperty('--mx', (xAxis * 25) + "deg");
             root.style.setProperty('--my', (-yAxis * 25) + "deg");
         }
 
-        // Mouse Tracker
         window.addEventListener('mousemove', (e) => {
             handleInteraction(e.clientX, e.clientY);
         });
 
-        // Touch Device Tracker
         window.addEventListener('touchmove', (e) => {
             if(e.touches.length > 0) {
                 handleInteraction(e.touches[0].clientX, e.touches[0].clientY);
