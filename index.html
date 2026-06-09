@@ -57,14 +57,35 @@
             width: 100%;
         }
 
+        /* --- ALL GAMERS Heading with Smooth Single Glow-Up --- */
         h1 {
             font-family: 'Orbitron', sans-serif;
             margin-top: 0;
             font-size: 2.2rem;
             margin-bottom: 35px;
             letter-spacing: 3px;
-            color: #00f2fe; /* High-tech Cyan */
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+            text-transform: uppercase;
+            
+            /* Starts in a dark, unlit state */
+            color: #1a1a24; 
+            text-shadow: none;
+            
+            /* Plays the smooth glow animation ONCE (forwards keeps it lit at the end) */
+            animation: powerOnGlow 3s ease-in-out 0.5s forwards;
+        }
+
+        /* Keyframes for the smooth single light-up effect */
+        @keyframes powerOnGlow {
+            0% {
+                color: #1a1a24;
+                text-shadow: none;
+            }
+            100% {
+                color: #00f2fe; /* High-tech Cyan */
+                text-shadow: 0 0 10px rgba(0, 242, 254, 0.8), 
+                             0 0 20px rgba(0, 242, 254, 0.5),
+                             0 0 40px rgba(0, 242, 254, 0.3);
+            }
         }
 
         /* --- Timer Layout --- */
@@ -163,7 +184,7 @@
 
     <div class="main-wrapper">
         <div class="countdown-container">
-            <h1>MISSION COUNTDOWN</h1>
+            <h1>ALL GAMERS</h1>
             
             <div id="countdown">
                 <div class="time-box">
