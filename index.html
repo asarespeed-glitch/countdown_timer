@@ -6,7 +6,7 @@
     <title>All_gamers | Project_Countdown</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@700;900&display=swap" rel="family">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -48,17 +48,16 @@
             perspective: 1000px;
         }
 
-        /* Rotating & Interactive Blurry Gamepad */
+        /* Rotating & Interactive Visible Gamepad */
         .gamepad-container {
             position: absolute;
             top: 15%;
             left: 15%;
             width: 70vw;
             height: 70vh;
-            filter: blur(25px) drop-shadow(0 0 50px rgba(92, 61, 46, 0.4));
-            opacity: 0.5;
+            filter: blur(10px) drop-shadow(0 0 60px rgba(92, 61, 46, 0.6)); /* Reduced blur, heightened glow */
+            opacity: 0.75; /* Increased base opacity for better visibility */
             transform-style: preserve-3d;
-            /* Combines infinite rotation with mouse/touch interaction tilt */
             transform: rotateX(var(--my)) rotateY(var(--mx));
             transition: transform 0.1s ease-out;
             pointer-events: none;
@@ -146,12 +145,12 @@
         }
 
         .timer-box {
-            background: rgba(35, 23, 16, 0.3);
-            border: 1px solid rgba(245, 245, 240, 0.1);
+            background: rgba(35, 23, 16, 0.5);
+            border: 1px solid rgba(245, 245, 240, 0.15);
             backdrop-filter: blur(10px);
             padding: 2rem 1rem;
             border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
         .timer-box .number {
@@ -266,17 +265,17 @@
     <div class="bg-canvas">
         <div class="gamepad-container" id="interactive-pad">
             <svg class="gamepad-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 40C20 30 30 25 50 25C70 25 80 30 80 40C80 55 75 75 65 75C60 75 55 68 50 68C45 68 40 75 35 75C25 75 20 55 20 40Z" fill="#f5f5f0" fill-opacity="0.15" stroke="#5c3d2e" stroke-width="1.5"/>
+                <path d="M20 40C20 30 30 25 50 25C70 25 80 30 80 40C80 55 75 75 65 75C60 75 55 68 50 68C45 68 40 75 35 75C25 75 20 55 20 40Z" fill="#f5f5f0" fill-opacity="0.25" stroke="#5c3d2e" stroke-width="2"/>
                 <path d="M32 45H28V49H32V45Z" fill="#5c3d2e"/>
-                <path d="M30 43H30.01M30 51H30.01M26 47H26.01M34 47H34.01" stroke="#5c3d2e" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="66" cy="43" r="2" fill="#f5f5f0" />
-                <circle cx="72" cy="47" r="2" fill="#f5f5f0" />
-                <circle cx="66" cy="51" r="2" fill="#f5f5f0" />
-                <circle cx="60" cy="47" r="2" fill="#f5f5f0" />
-                <circle cx="41" cy="54" r="5" stroke="#5c3d2e" stroke-width="1"/>
-                <circle cx="41" cy="54" r="2" fill="#5c3d2e"/>
-                <circle cx="59" cy="54" r="5" stroke="#5c3d2e" stroke-width="1"/>
-                <circle cx="59" cy="54" r="2" fill="#5c3d2e"/>
+                <path d="M30 43H30.01M30 51H30.01M26 47H26.01M34 47H34.01" stroke="#5c3d2e" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="66" cy="43" r="2.5" fill="#f5f5f0" />
+                <circle cx="72" cy="47" r="2.5" fill="#f5f5f0" />
+                <circle cx="66" cy="51" r="2.5" fill="#f5f5f0" />
+                <circle cx="60" cy="47" r="2.5" fill="#f5f5f0" />
+                <circle cx="41" cy="54" r="5.5" stroke="#5c3d2e" stroke-width="1.5"/>
+                <circle cx="41" cy="54" r="2.5" fill="#5c3d2e"/>
+                <circle cx="59" cy="54" r="5.5" stroke="#5c3d2e" stroke-width="1.5"/>
+                <circle cx="59" cy="54" r="2.5" fill="#5c3d2e"/>
             </svg>
         </div>
     </div>
@@ -352,7 +351,7 @@
             document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
         }
         setInterval(updateCountdown, 1000);
-        updateCountdown(); // Instant launch invocation
+        updateCountdown();
 
         // 2. Mouse and Touch Dynamic Interactive Tilt System
         const root = document.documentElement;
