@@ -3,460 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All_gamers | Project_Countdown</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20 40C20 30 30 25 50 25C70 25 80 30 80 40C80 55 75 75 65 75C60 75 55 68 50 68C45 68 40 75 35 75C25 75 20 55 20 40Z' fill='%23f5f5f0' stroke='%235c3d2e' stroke-width='4'/%3E%3Ccircle cx='38' cy='48' r='7' fill='%23231710'/%3E%3Ccircle cx='62' cy='48' r='7' fill='%23231710'/%3E%3Crect x='22' y='45' width='6' height='6' fill='%235c3d2e'/%3E%3Ccircle cx='72' cy='48' r='3' fill='%235c3d2e'/%3E%3C/svg%3E">
+    <title>Live Registration & Verification System</title>
+    <meta name="description" content="Secure, live registration portal featuring instant verification status tracking and high-performance layout.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Registration Portal">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-    
+    <meta property="og:title" content="Live Registration & Verification System">
+    <meta property="og:description" content="Sign up and manage verified registrants instantly in real-time.">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/svg+xml" href="https://api.dicebear.com/7.x/initials/svg?seed=W&backgroundColor=1e3799&fontSize=60">
+    <link rel="alternate icon" type="image/png" href="https://api.dicebear.com/7.x/initials/png?seed=W&backgroundColor=1e3799">
+
     <style>
-        :root {
-            --bg-black: #0a0a0a;
-            --bg-brown: #231710;
-            --accent-brown: #5c3d2e;
-            --off-white: #f5f5f0;
-            --text-muted: #b5b0aa;
-            
-            /* Interactive variables updated by JS */
-            --mx: 0deg;
-            --my: 0deg;
+        /* Define the dynamic, moving sky gradient background */
+        @keyframes skyGradient {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
         }
 
-        * {
-            box-sizing: border-box;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Shifting colors: cosmic purple -> deep blue -> sunset orange -> blue */
+            background: linear-gradient(-45deg, #231131, #0c2461, #f3a683, #1e3799);
+            background-size: 400% 400%;
+            animation: skyGradient 15s ease infinite;
             margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            background-color: var(--bg-black);
-            font-family: 'Inter', sans-serif;
-            color: var(--off-white);
-            overflow-x: hidden;
-        }
-
-        /* Ambient Dynamic Background */
-        .bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            background: radial-gradient(circle at 50% 50%, var(--bg-brown) 0%, var(--bg-black) 80%);
-            overflow: hidden;
-            perspective: 1000px;
-        }
-
-        /* Rotating & Interactive Visible Gamepad */
-        .gamepad-container {
-            position: absolute;
-            top: 15%;
-            left: 15%;
-            width: 70vw;
-            height: 70vh;
-            filter: blur(10px) drop-shadow(0 0 60px rgba(92, 61, 46, 0.6));
-            opacity: 0.75;
-            transform-style: preserve-3d;
-            transform: rotateX(var(--my)) rotateY(var(--mx));
-            transition: transform 0.1s ease-out;
-            pointer-events: none;
-        }
-
-        .gamepad-svg {
-            width: 100%;
-            height: 100%;
-            animation: continuousRotate 25s linear infinite;
-        }
-
-        @keyframes continuousRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Layout & Typography */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        section {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 4rem 0;
+            overflow-x: hidden;
+            position: relative; /* Container for touch effect */
         }
 
-        /* Section 1: Hero & Vision */
-        #hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 900;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, var(--off-white) 30%, var(--accent-brown) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 2rem;
-            
-            /* Periodic 10-second blink animation logic */
-            animation: periodicBlink 10s infinite;
-        }
-
-        /* Blinks cleanly during the last second of a 10s loop */
-        @keyframes periodicBlink {
-            0%, 90%, 93%, 96%, 100% {
-                opacity: 1;
-            }
-            91.5%, 94.5% {
-                opacity: 0;
-            }
-        }
-
-        #hero h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            color: var(--accent-brown);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        #hero p {
-            max-width: 700px;
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            line-height: 1.8;
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
-        /* Section 2: Project Countdown */
-        #countdown-section h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: var(--off-white);
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        /* Grid Timer Display */
-        .timer-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .timer-box {
-            background: rgba(35, 23, 16, 0.5);
-            border: 1px solid rgba(245, 245, 240, 0.15);
+        /* Glassmorphism for the containers (Frosted Glass Effect) */
+        .container, .list-container {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            padding: 2rem 1rem;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+            z-index: 10; /* Keep text above background touch effects */
         }
 
-        .timer-box .number {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            color: var(--off-white);
-            display: block;
+        .list-container {
+            padding: 20px;
         }
 
-        .timer-box .label {
-            font-size: 0.75rem;
+        h2, h3 { 
+            color: #fff; 
+            margin-top: 0; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        label { 
+            font-weight: bold; 
+            display: block; 
+            margin: 10px 0 5px; 
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        input[type="text"]::placeholder, input[type="email"]::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus {
+            outline: none;
+            border-color: #f3a683; /* Sunset highlight on focus */
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        button {
+            background-color: #28a745; /* Modern Green */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.1s ease;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-brown);
-            margin-top: 0.5rem;
-            display: block;
+            letter-spacing: 1px;
         }
 
-        #countdown-section p {
-            max-width: 800px;
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-            line-height: 1.7;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        /* Footer / Credits Section */
-        footer {
-            min-height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border-top: 1px solid rgba(245, 245, 240, 0.05);
-            background: linear-gradient(to bottom, transparent, #050505);
-            padding: 3rem 1rem;
-        }
-
-        footer .contributors {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            color: var(--off-white);
-            margin-bottom: 1.5rem;
-        }
-
-        footer .contributors span {
-            color: var(--accent-brown);
-            font-weight: 700;
-        }
-
-        footer .support-text {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        /* YouTube Support Button */
-        .btn-youtube {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background-color: #ff0000;
-            color: #ffffff;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            text-decoration: none;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-        }
-
-        .btn-youtube:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 45px rgba(255, 0, 0, 0.6);
-            background-color: #cc0000;
-        }
-
-        .btn-youtube:active {
+        button:hover { 
+            background-color: #218838; 
             transform: translateY(-1px);
         }
-
-        /* Scroll Indicator Chevron */
-        .scroll-down {
-            margin-top: 2rem;
-            color: var(--accent-brown);
-            font-size: 1.5rem;
-            animation: bounce 2s infinite;
-            cursor: pointer;
+        
+        button:active {
+            transform: translateY(1px);
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        .message-box {
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            display: none;
+            font-weight: 500;
         }
 
-        /* Portrait Mode Typography Upgrades */
-        @media (orientation: portrait) {
-            .container {
-                padding: 0 1.5rem;
-            }
+        .error { background-color: rgba(248, 215, 218, 0.9); color: #721c24; border: 1px solid #f5c6cb; }
+        .success { background-color: rgba(212, 237, 218, 0.9); color: #155724; border: 1px solid #c3e6cb; }
 
-            #hero h1 {
-                font-size: clamp(3.8rem, 13vw, 5.5rem);
-                margin-bottom: 2.5rem;
-            }
+        ul { list-style-type: none; padding: 0; }
+        li {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+        
+        li:last-child {
+            border-bottom: none;
+        }
 
-            #hero h2 {
-                font-size: clamp(1.6rem, 5.5vw, 2.2rem);
-                letter-spacing: 4px;
-                margin-bottom: 1.5rem;
-            }
+        /* Styles for the Dynamic Touch Effect Particles */
+        .touch-particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none; /* Ignore clicks */
+            background: rgba(130, 204, 221, 0.7); /* Subtle Blue/Aqua glow */
+            box-shadow: 0 0 10px rgba(130, 204, 221, 0.9), 0 0 20px rgba(130, 204, 221, 0.5);
+            transform: translate(-50%, -50%) scale(0);
+            animation: touchRipple 0.8s ease-out;
+            z-index: 1; /* Below form/list boxes */
+        }
 
-            #hero p {
-                font-size: clamp(1.15rem, 4.5vw, 1.4rem);
-                line-height: 1.7;
+        @keyframes touchRipple {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
             }
-
-            #countdown-section h1 {
-                font-size: clamp(2.8rem, 9vw, 4.5rem);
-                margin-bottom: 3.5rem;
-            }
-
-            .timer-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.2rem;
-                margin-bottom: 3.5rem;
-            }
-
-            .timer-box {
-                padding: 2.2rem 1rem;
-            }
-
-            .timer-box .number {
-                font-size: clamp(2.6rem, 9vw, 3.8rem);
-            }
-
-            .timer-box .label {
-                font-size: 0.85rem;
-                letter-spacing: 3px;
-                margin-top: 0.75rem;
-            }
-
-            #countdown-section p {
-                font-size: clamp(1.2rem, 4.5vw, 1.5rem);
-                line-height: 1.6;
-            }
-
-            footer .contributors {
-                font-size: 1.4rem;
-                letter-spacing: 2px;
-                margin-bottom: 2rem;
-            }
-
-            footer .support-text {
-                font-size: 1.15rem;
-                line-height: 1.5;
-                margin-bottom: 2.5rem;
-            }
-
-            .btn-youtube {
-                font-size: 1.15rem;
-                padding: 1.2rem 3.5rem;
-                width: 85%;
-                justify-content: center;
+            100% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-canvas">
-        <div class="gamepad-container" id="interactive-pad">
-            <svg class="gamepad-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 40C20 30 30 25 50 25C70 25 80 30 80 40C80 55 75 75 65 75C60 75 55 68 50 68C45 68 40 75 35 75C25 75 20 55 20 40Z" fill="#f5f5f0" fill-opacity="0.25" stroke="#5c3d2e" stroke-width="2"/>
-                <path d="M32 45H28V49H32V45Z" fill="#5c3d2e"/>
-                <path d="M30 43H30.01M30 51H30.01M26 47H26.01M34 47H34.01" stroke="#5c3d2e" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="66" cy="43" r="2.5" fill="#f5f5f0" />
-                <circle cx="72" cy="47" r="2.5" fill="#f5f5f0" />
-                <circle cx="66" cy="51" r="2.5" fill="#f5f5f0" />
-                <circle cx="60" cy="47" r="2.5" fill="#f5f5f0" />
-                <circle cx="41" cy="54" r="5.5" stroke="#5c3d2e" stroke-width="1.5"/>
-                <circle cx="41" cy="54" r="2.5" fill="#5c3d2e"/>
-                <circle cx="59" cy="54" r="5.5" stroke="#5c3d2e" stroke-width="1.5"/>
-                <circle cx="59" cy="54" r="2.5" fill="#5c3d2e"/>
-            </svg>
-        </div>
+    <div class="container">
+        <h2>Registrant Sign Up</h2>
+        <form id="registrationForm" action="https://formspree.io/f/xaqgegzk" method="POST">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="Registrant Name" placeholder="John Doe" required>
+
+            <label for="userEmail">Your Email</label>
+            <input type="email" id="userEmail" name="Registrant Email" placeholder="you@example.com" required>
+
+            <button type="submit">Submit & Verify</button>
+        </form>
+
+        <div id="statusMessage" class="message-box"></div>
     </div>
 
-    <div class="container">
-        
-        <section id="hero">
-            <h1>All_gamers</h1>
-            <h2>Vision Statement</h2>
-            <p>Building the world’s largest gaming community — a dedicated home where all gamers can share ideas, experiences, and opportunities for growth.</p>
-            <div class="scroll-down" onclick="document.getElementById('countdown-section').scrollIntoView();">▼</div>
-        </section>
-
-        <section id="countdown-section">
-            <h1>Project_Countdown</h1>
-            
-            <div class="timer-container">
-                <div class="timer-box">
-                    <span class="number" id="days">00</span>
-                    <span class="label">Days</span>
-                </div>
-                <div class="timer-box">
-                    <span class="number" id="hours">00</span>
-                    <span class="label">Hours</span>
-                </div>
-                <div class="timer-box">
-                    <span class="number" id="minutes">00</span>
-                    <span class="label">Minutes</span>
-                </div>
-                <div class="timer-box">
-                    <span class="number" id="seconds">00</span>
-                    <span class="label">Seconds</span>
-                </div>
-            </div>
-
-            <p>The next paradigm of gaming starts here: one connected world, one synchronized experience, powered by the collective.</p>
-        </section>
-
-        <footer>
-            <div class="contributors">Current contributors: <span>DE GRANTS</span></div>
-            <div class="support-text">show support by subscribing to YouTube (@all_gamers_jwufuru)</div>
-            <a href="https://youtube.com/@all_gamers_jwufuru?si=oXAhthBlnhVKuYt-" target="_blank" rel="noopener noreferrer" class="btn-youtube">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px; vertical-align: middle;">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93-.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-                Subscribe
-            </a>
-        </footer>
-
+    <div class="list-container">
+        <h3>Approved Registrants</h3>
+        <ul id="registrantList">
+        </ul>
     </div>
 
     <script>
-        // 1. Precise Target Countdown Logic (Ends June 9, 2027)
-        const targetDate = new Date("June 9, 2027 00:00:00").getTime();
+        const form = document.getElementById('registrationForm');
+        const statusMessage = document.getElementById('statusMessage');
+        const registrantList = document.getElementById('registrantList');
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const difference = targetDate - now;
+        let approvedRegistrants = [];
 
-            if (difference < 0) {
-                document.querySelector('.timer-container').innerHTML = "<div style='grid-column: span 2; font-family:\"Orbitron\"; font-size:2rem;'>THE PARADIGM HAS BEGUN</div>";
-                return;
+        // --- SUBMISSION LOGIC ---
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('fullName').value;
+            const data = new FormData(form);
+
+            statusMessage.style.display = "none";
+            statusMessage.className = "message-box";
+
+            try {
+                // Send form data to Formspree backend
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    // Admin verification logic path
+                    const verificationCheck = confirm(`Data emailed to asarespeed@gmail.com!\n\nVerify registrant "${name}" for the web page list?\n\nClick OK for YES, Cancel for NO.`);
+
+                    if (verificationCheck) {
+                        approvedRegistrants.push(name);
+                        updateRegistrantList();
+                        
+                        statusMessage.textContent = "Verification Successful! You have been added to the list.";
+                        statusMessage.className = "message-box success";
+                        statusMessage.style.display = "block";
+                        form.reset();
+                    } else {
+                        statusMessage.textContent = "Verification Failed. Please either restart the whole registration process or call the technical team for assistance.";
+                        statusMessage.className = "message-box error";
+                        statusMessage.style.display = "block";
+                    }
+                } else {
+                    throw new Error("Formspree error response");
+                }
+            } catch (error) {
+                statusMessage.textContent = "Oops! There was a problem submitting your form.";
+                statusMessage.className = "message-box error";
+                statusMessage.style.display = "block";
             }
-
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // 2. Mouse and Touch Dynamic Interactive Tilt System
-        const root = document.documentElement;
-
-        function handleInteraction(clientX, clientY) {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            
-            const xAxis = (width / 2 - clientX) / (width / 2);
-            const yAxis = (height / 2 - clientY) / (height / 2);
-            
-            root.style.setProperty('--mx', (xAxis * 25) + "deg");
-            root.style.setProperty('--my', (-yAxis * 25) + "deg");
-        }
-
-        window.addEventListener('mousemove', (e) => {
-            handleInteraction(e.clientX, e.clientY);
         });
 
-        window.addEventListener('touchmove', (e) => {
-            if(e.touches.length > 0) {
-                handleInteraction(e.touches[0].clientX, e.touches[0].clientY);
+        function updateRegistrantList() {
+            registrantList.innerHTML = '';
+            if(approvedRegistrants.length === 0) {
+                registrantList.innerHTML = '<li>No approved registrants yet.</li>';
+                return;
             }
-        }, { passive: true });
-    </script>
-</body>
-</html>
+            approvedRegistrants.forEach(registrant => {
+                const li = document.createElement('li');
+                li.textContent = registrant;
+                registrantList.appendChild(li);
+            });
+        }
+
+        // --- DYNAMIC TOUCH EFFECT LOGIC ---
+        document.addEventListener('click', createTouchEffect);
+        document.addEventListener('touchstart', (e) => createTouchEffect(e.touches[0]));
+
+        function createTouchEffect(e) {
+            if (e.target !== document.body && !document.body.contains(e.target)) return;
+            if (e.target.closest('.container') || e.target.closest('.list-container')) return;
+
+            const effect = document.
